@@ -63,7 +63,7 @@ app.put("/canciones/:id", (req, res, next) => {
         }
 
         const canciones = JSON.parse(fs.readFileSync("repertorio.json", "utf8"));
-        const index = canciones.findIndex((cancion) => cancion.id === id);
+        const index = canciones.findIndex((cancion) => cancion.id === parseInt(id));
 
         // Verificar si la canción con el ID proporcionado existe en la lista
         if (index === -1) {
@@ -71,7 +71,7 @@ app.put("/canciones/:id", (req, res, next) => {
         }
 
         canciones[index] = cancion;
-
+        canciones[index].id = parseInt(id);
         fs.writeFileSync("repertorio.json", JSON.stringify(canciones));
         res.send("Canción actualizada");
     } catch (error) {
@@ -84,7 +84,7 @@ app.delete("/canciones/:id", (req, res, next) => {
         // Eliminar una canción de la lista por su ID
         const { id } = req.params;
         const canciones = JSON.parse(fs.readFileSync("repertorio.json", "utf8"));
-        const index = canciones.findIndex((cancion) => cancion.id === id);
+        const index = canciones.findIndex((cancion) => cancion.id === parseInt(id));
 
         // Verificar si la canción con el ID proporcionado existe en la lista
         if (index === -1) {
